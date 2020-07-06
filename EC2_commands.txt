@@ -1,0 +1,21 @@
+1) create Key pair
+
+aws ec2 create-key-pair --key-name chaos-admin --query 'KeyMaterial' --output text > chaos-admin.pem
+
+2) create security group
+
+aws ec2 create-security-group --group-name chaos-admin-sg --description "chaos-admin security group"
+
+aws ec2 authorize-security-group-ingress --group-name chaos-admin-sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name chaos-admin-sg --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+3) create EC2 instance
+
+aws ec2 run-instances \
+--image-id ami-09d95fab7fff3776c \
+--count 1 \
+--instance-type t2.micro \
+--key-name chaos-admin \
+--security-group-ids chaos-admin-sg \
+--tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=chaos-admin}]' \
+--user-data file://bootstrap.txt
