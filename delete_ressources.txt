@@ -1,0 +1,15 @@
+1) delete EC2 instance
+
+aws ec2 describe-instances \
+--filters "Name=tag:Name,Values=chaos-admin" \
+--query Reservations[0].Instances[0].InstanceId \
+--output text | \
+sed 's/$//g' | \
+xargs -t aws ec2 terminate-instances --instance-ids
+
+aws ec2 delete-key-pair --key-name chaos-admin
+aws ec2 delete-security-group --group-name chaos-admin-sg
+
+2) delete DynamoDb facts table
+
+aws dynamodb delete-table --table-name facts
