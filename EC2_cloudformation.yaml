@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+    Ec2Instance: 
+        Type: AWS::EC2::Instance
+        Properties: 
+            ImageId: ami-09d95fab7fff3776c
+            KeyName: chaos-admin
+            SecurityGroups: ["chaos-admin-sg"]
+            InstanceType: t2.micro
+            UserData: bootstrap.txt
+            Tags:
+                -
+                    Key: Name
+                    Value: chaos-admin
