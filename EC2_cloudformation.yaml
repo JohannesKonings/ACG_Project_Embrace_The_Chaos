@@ -7,7 +7,6 @@ Resources:
             KeyName: chaos-admin
             SecurityGroups: ["chaos-admin-sg"]
             InstanceType: t2.micro
-            UserData: bootstrap.txt
             Tags:
                 -
                     Key: Name
