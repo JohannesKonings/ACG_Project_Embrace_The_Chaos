@@ -1,11 +1,27 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Resources:
+    SecurityGroup: 
+        Type: 'AWS::EC2::SecurityGroup'
+        Properties:
+            GroupDescription: >-
+                Enable HTTP access via port 80 locked down to the load balancer + SSH
+                access
+            SecurityGroupIngress:
+                -   IpProtocol: tcp
+                    FromPort: '80'
+                    ToPort: '80'
+                    CidrIp: 0.0.0.0/0
+            Tags:
+                -
+                    Key: Name
+                    Value: chaos-admin
     Ec2Instance: 
         Type: AWS::EC2::Instance
         Properties: 
             ImageId: ami-09d95fab7fff3776c
             KeyName: chaos-admin
-            SecurityGroups: ["chaos-admin-sg"]
+            SecurityGroups: 
+                - Ref: SecurityGroup
             InstanceType: t2.micro
             UserData:
                 Fn::Base64: !Sub | 
