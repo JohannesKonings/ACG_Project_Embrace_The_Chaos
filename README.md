@@ -15,3 +15,18 @@ deletion
 ```sh
 aws cloudformation delete-stack --stack-name EC2-chaos-admin
 ```
+
+## terraform
+
+```sh
+terraform init
+```
+```sh
+terraform plan
+```
+```sh
+terraform apply
+```
+```sh
+terraform destroy
+```
